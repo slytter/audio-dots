@@ -11,8 +11,6 @@ function mousePressed() {
 
 function setup() {
 
-
-
     // Create a start button
     button = createButton('Start3 Audio');
     button.mousePressed(() => {
