@@ -44,12 +44,17 @@ function setup() {
     });
 }
 
-const gridDensity = 0.3
+// input:
 const inputResponseLevel = 1
-const inputResponseFrequency = 40
-const gridSize = 12
-const noiseSpeedFactor = 0.01
+const inputResponseFrequency = 60
 const power = 5
+
+// grid:
+const gridSize = 12
+
+// noise:
+const noiseDensity = 0.3
+const noiseSpeedFactor = 0.01
 
 let frame = 0
 function draw() {
@@ -60,12 +65,7 @@ function draw() {
 
   background('rgba(0,0,0,0.3)');
 
-  // Get the average (root mean square) amplitude
-  let level = sound.getLevel() * inputResponseLevel;
   fft.analyze();
-
-
-  // Get the bass frequencies
   level = fft.getEnergy(inputResponseFrequency) / 255 * inputResponseLevel
   level = Math.pow(level, power);
 
@@ -83,14 +83,14 @@ function draw() {
     for (let j = 0; j < gridSize; j++) {
 
       // Incorporate Perlin noise into the diameter of the ellipse
-      let noiseFactor = noise(i * gridDensity + frame * noiseSpeedFactor, j * gridDensity + noiseSpeedFactor);
+      let noiseFactor = noise(i * noiseDensity + frame * noiseSpeedFactor, j * noiseDensity + noiseSpeedFactor);
 
 
       let size = map(level * noiseFactor,
         0, 1, 0, gridHeight
       )
 
-        let x = gridWidth / 2 + i * gridWidth;
+      let x = gridWidth / 2 + i * gridWidth;
       let y = gridHeight / 2 + j * gridHeight;
 
       // fill(color(255, 255, 255, diam * 100))
